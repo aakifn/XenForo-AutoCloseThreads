@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="NixFifty_AutoCloseThreads" title="NixFifty: Auto Close Threads" version_string="1.0.0" version_id="1" url="" install_callback_class="NixFifty_AutoCloseThreads_Install" install_callback_method="install" uninstall_callback_class="NixFifty_AutoCloseThreads_Install" uninstall_callback_method="uninstall">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="nf_autoclose_forum_edit"><![CDATA[<fieldset>
+
+	<xen:checkboxunit label="">
+		<xen:option name="auto_close_enabled" label="{xen:phrase nf_autoclose_enable_auto_closing_threads}" selected="{$forum.auto_close_enabled}" />
+	</xen:checkboxunit>
+	
+	<xen:spinboxunit name="auto_close_days" label="{xen:phrase nf_autoclose_days_until_auto_close}:" value="{$forum.auto_close_days}" min="0" max="999" />
+	
+	<xen:radiounit label="{xen:phrase nf_autoclose_close_based_on}:" name="auto_close_mode" value="{$forum.auto_close_mode}">
+		<xen:option value="last_post_date">{xen:phrase last_message}</xen:option>
+		<xen:option value="post_date">{xen:phrase start_date}</xen:option>
+	</xen:radiounit>
+
+</fieldset>]]></template>
+  </admin_templates>
+  <admin_template_modifications>
+    <modification template="forum_edit" modification_key="nf_autoclose_forum_edit" description="" execution_order="9" enabled="1" action="str_replace">
+      <find><![CDATA[<!-- slot: after_description -->]]></find>
+      <replace><![CDATA[$0
+<xen:include template="nf_autoclose_forum_edit" />]]></replace>
+    </modification>
+  </admin_template_modifications>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="NixFifty_AutoCloseThreads_Listen" callback_method="loadForumController" active="1" hint="XenForo_ControllerAdmin_Forum" description="Listens for the XenForo_ControllerAdmin_Forum class."/>
+    <listener event_id="load_class_datawriter" execute_order="10" callback_class="NixFifty_AutoCloseThreads_Listen" callback_method="loadForumDataWriter" active="1" hint="XenForo_DataWriter_Forum" description="Listen for the XenForo_DataWriter_Forum class."/>
+  </code_event_listeners>
+  <cron>
+    <entry entry_id="NFAutoCloseThreads" cron_class="NixFifty_AutoCloseThreads_CronEntry_CloseThread" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":["-1"],"hours":["1"],"minutes":["0"]}]]></entry>
+  </cron>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups/>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="cron_entry_NFAutoCloseThreads" version_id="1" version_string="1.0.0"><![CDATA[NixFifty: Auto Close Threads]]></phrase>
+    <phrase title="nf_autoclose_close_based_on" version_id="1" version_string="1.0.0"><![CDATA[Close Based On]]></phrase>
+    <phrase title="nf_autoclose_days_until_auto_close" version_id="1" version_string="1.0.0"><![CDATA[Days Until Auto Close]]></phrase>
+    <phrase title="nf_autoclose_enable_auto_closing_threads" version_id="1" version_string="1.0.0"><![CDATA[Enable automatic closing of threads]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates/>
+  <public_template_modifications/>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
