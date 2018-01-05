@@ -19,4 +19,22 @@ class NixFifty_AutoCloseThreads_XenForo_DataWriter_Forum extends XFCP_NixFifty_A
 
         return $fields;
     }
+
+    protected function _preSave()
+    {
+    	if (!is_null(NixFifty_AutoCloseThreads_Globals::$enabled))
+	    {
+		    $this->set('auto_close_enabled', NixFifty_AutoCloseThreads_Globals::$enabled);
+	    }
+
+        if (!is_null(NixFifty_AutoCloseThreads_Globals::$days))
+        {
+        	$this->set('auto_close_days', NixFifty_AutoCloseThreads_Globals::$days);
+        }
+
+        if (!is_null(NixFifty_AutoCloseThreads_Globals::$mode))
+        {
+        	$this->set('auto_close_mode', NixFifty_AutoCloseThreads_Globals::$mode);
+        }
+    }
 }
