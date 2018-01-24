@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<addon addon_id="NixFifty_AutoCloseThreads" title="NixFifty: Auto Close Threads" version_string="1.0.2" version_id="1000270" url="https://nixfifty.com/" install_callback_class="NixFifty_AutoCloseThreads_Install" install_callback_method="install" uninstall_callback_class="NixFifty_AutoCloseThreads_Install" uninstall_callback_method="uninstall">
+<addon addon_id="NixFifty_AutoCloseThreads" title="NixFifty: Auto Close Threads" version_string="1.0.3" version_id="1000370" url="https://nixfifty.com/" install_callback_class="NixFifty_AutoCloseThreads_Install" install_callback_method="install" uninstall_callback_class="NixFifty_AutoCloseThreads_Install" uninstall_callback_method="uninstall">
   <admin_navigation/>
   <admin_permissions/>
   <admin_style_properties/>
@@ -30,6 +30,9 @@
   <code_event_listeners>
     <listener event_id="load_class" execute_order="10" callback_class="NixFifty_AutoCloseThreads_Listen" callback_method="loadClass" active="1" hint="XenForo_ControllerAdmin_Forum" description="Listens for the XenForo_ControllerAdmin_Forum class."/>
     <listener event_id="load_class" execute_order="10" callback_class="NixFifty_AutoCloseThreads_Listen" callback_method="loadClass" active="1" hint="XenForo_DataWriter_Forum" description="Listen for the XenForo_DataWriter_Forum class."/>
+    <listener event_id="load_class" execute_order="10" callback_class="NixFifty_AutoCloseThreads_Listen" callback_method="loadClass" active="1" hint="XenForo_DataWriter_Discussion_Thread" description="XenForo_DataWriter_Discussion_Thread"/>
+    <listener event_id="load_class" execute_order="10" callback_class="NixFifty_AutoCloseThreads_Listen" callback_method="loadClass" active="1" hint="XenForo_ControllerPublic_Thread" description="XenForo_ControllerPublic_Thread"/>
+    <listener event_id="load_class" execute_order="10" callback_class="NixFifty_AutoCloseThreads_Listen" callback_method="loadClass" active="1" hint="XenForo_Model_Thread" description="XenForo_Model_Thread"/>
   </code_event_listeners>
   <cron>
     <entry entry_id="NFAutoCloseThreads" cron_class="NixFifty_AutoCloseThreads_CronEntry_CloseThread" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":["-1"],"hours":["1"],"minutes":["0"]}]]></entry>
@@ -47,11 +50,17 @@
     <phrase title="nf_autoclose_close_based_on" version_id="1" version_string="1.0.0"><![CDATA[Close Based On]]></phrase>
     <phrase title="nf_autoclose_days_until_auto_close" version_id="1" version_string="1.0.0"><![CDATA[Days Until Auto Close]]></phrase>
     <phrase title="nf_autoclose_enable_auto_closing_threads" version_id="1" version_string="1.0.0"><![CDATA[Enable automatic closing of threads]]></phrase>
+    <phrase title="nf_autoclose_not_open_for_further_replies" version_id="1000370" version_string="1.0.3"><![CDATA[Not open for further replies due to lack of activity. Consider opening a new thread instead.]]></phrase>
   </phrases>
   <route_prefixes/>
   <style_properties/>
   <templates/>
-  <public_template_modifications/>
+  <public_template_modifications>
+    <modification template="thread_view" modification_key="nf_autoclose_thread_view" description="Swap out phrase if thread was locked automagically." execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{xen:phrase not_open_for_further_replies}]]></find>
+      <replace><![CDATA[<xen:if is="{$thread.nf_auto_close}">{xen:phrase nf_autoclose_not_open_for_further_replies}<xen:else />{xen:phrase not_open_for_further_replies}</xen:if>]]></replace>
+    </modification>
+  </public_template_modifications>
   <bb_code_media_sites/>
   <bb_codes/>
 </addon>

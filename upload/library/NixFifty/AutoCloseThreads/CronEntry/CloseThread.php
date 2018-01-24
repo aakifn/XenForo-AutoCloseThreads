@@ -28,6 +28,8 @@ class NixFifty_AutoCloseThreads_CronEntry_CloseThread
                     $threadDw->setExistingData($thread);
                     $threadDw->set('discussion_open', 0);
                     $threadDw->save();
+
+                    $autoCloseModel->logThreadClose($thread['thread_id']);
                 }
             }
         }

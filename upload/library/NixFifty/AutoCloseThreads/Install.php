@@ -11,8 +11,19 @@ class NixFifty_AutoCloseThreads_Install
             throw new XenForo_Exception('This add-on requires XenForo 1.3.0 or higher.', true);
         }
 
-        if (!$installedAddon)
+	    $tables = self::_getTables();
+
+	    if (!$installedAddon)
         {
+	        foreach ($tables AS $tableSql)
+	        {
+		        try
+		        {
+			        $db->query($tableSql);
+		        }
+		        catch (Zend_Db_Exception $e) {}
+	        }
+
             foreach (self::_getAlters() AS $alterSql)
             {
                 try
@@ -24,7 +35,10 @@ class NixFifty_AutoCloseThreads_Install
         }
         else
         {
-            // upgrades
+        	if ($installedAddon['version_id'] < 1000370)
+	        {
+	        	$db->query($tables['xf_nf_auto_closed']);
+	        }
         }
     }
 
@@ -52,6 +66,20 @@ class NixFifty_AutoCloseThreads_Install
 
         XenForo_Db::commit($db);
     }
+
+	protected static function _getTables()
+	{
+		$tables = [];
+
+		$tables['xf_nf_auto_closed'] = "
+			CREATE TABLE IF NOT EXISTS `xf_nf_auto_closed` (
+			  `thread_id` int(10) unsigned NOT NULL,
+			  KEY `thread_id` (`thread_id`)
+			) ENGINE=MEMORY DEFAULT CHARSET=utf8;
+		";
+
+		return $tables;
+	}
 
     protected static function _getAlters()
     {

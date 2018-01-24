@@ -2,19 +2,6 @@
 
 class NixFifty_AutoCloseThreads_XenForo_ControllerAdmin_Forum extends XFCP_NixFifty_AutoCloseThreads_XenForo_ControllerAdmin_Forum
 {
-	public function actionEdit()
-	{
-		/*$response = parent::actionEdit();
-
-		if ($response instanceof XenForo_ControllerResponse_View && $response->params &&
-			!isset($response->params['forum']['auto_close_mode']))
-		{
-			$response->params['forum']['auto_close_mode'] = 'last_post_date';
-		}
-		die(Zend_Debug::dump($response->params));*/
-		return parent::actionEdit();
-	}
-
 	public function actionSave()
     {
         $writerData = $this->_input->filter(array(
