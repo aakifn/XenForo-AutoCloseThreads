@@ -22,7 +22,9 @@ class NixFifty_AutoCloseThreads_XenForo_DataWriter_Forum extends XFCP_NixFifty_A
 
     protected function _preSave()
     {
-    	if (!is_null(NixFifty_AutoCloseThreads_Globals::$enabled))
+	    parent::_preSave();
+
+	    if (!is_null(NixFifty_AutoCloseThreads_Globals::$enabled))
 	    {
 		    $this->set('auto_close_enabled', NixFifty_AutoCloseThreads_Globals::$enabled);
 	    }

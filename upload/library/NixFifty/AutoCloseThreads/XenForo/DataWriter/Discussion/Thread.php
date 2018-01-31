@@ -5,6 +5,8 @@ class NixFifty_AutoCloseThreads_XenForo_DataWriter_Discussion_Thread
 {
 	protected function _discussionPostSave()
 	{
+		parent::_discussionPostSave();
+
 		if ($this->isUpdate() && !$this->getExisting('discussion_open')
 			&& $this->get('discussion_open')
 		)
