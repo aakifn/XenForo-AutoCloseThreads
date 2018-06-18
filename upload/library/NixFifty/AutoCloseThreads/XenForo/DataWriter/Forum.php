@@ -16,6 +16,8 @@ class NixFifty_AutoCloseThreads_XenForo_DataWriter_Forum extends XFCP_NixFifty_A
         $fields['xf_forum']['auto_close_mode'] = array('type' => self::TYPE_STRING, 'default' => 'last_post_date',
             'allowedValues' => array('post_date', 'last_post_date')
         );
+        $fields['xf_forum']['auto_close_replies'] = array('type' => self::TYPE_INT, 'default' => -1);
+        $fields['xf_forum']['auto_close_views'] = array('type' => self::TYPE_INT, 'default' => -1);
 
         return $fields;
     }
@@ -37,6 +39,16 @@ class NixFifty_AutoCloseThreads_XenForo_DataWriter_Forum extends XFCP_NixFifty_A
         if (!is_null(NixFifty_AutoCloseThreads_Globals::$mode))
         {
         	$this->set('auto_close_mode', NixFifty_AutoCloseThreads_Globals::$mode);
+        }
+
+        if (!is_null(NixFifty_AutoCloseThreads_Globals::$replies))
+        {
+            $this->set('auto_close_replies', NixFifty_AutoCloseThreads_Globals::$replies);
+        }
+
+        if (!is_null(NixFifty_AutoCloseThreads_Globals::$views))
+        {
+            $this->set('auto_close_views', NixFifty_AutoCloseThreads_Globals::$views);
         }
     }
 }
