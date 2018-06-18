@@ -97,6 +97,13 @@ class NixFifty_AutoCloseThreads_Install
 			ALTER TABLE xf_forum	ADD COLUMN `auto_close_mode` VARCHAR(25) NOT NULL DEFAULT 'last_post_date'
 		";
 
+        $alters['xf_forum_auto_close_replies'] = "
+			ALTER TABLE xf_forum	ADD COLUMN `auto_close_replies` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '-1'
+		";
+
+        $alters['xf_forum_auto_close_views'] = "
+			ALTER TABLE xf_forum	ADD COLUMN `auto_close_views` INT(10) UNSIGNED NOT NULL DEFAULT '-1'
+		";
         return $alters;
     }
 
