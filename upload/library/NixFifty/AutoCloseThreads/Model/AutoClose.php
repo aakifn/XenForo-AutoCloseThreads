@@ -30,9 +30,9 @@ class NixFifty_AutoCloseThreads_Model_AutoClose extends XenForo_Model
 			FROM xf_thread AS thread
 			WHERE discussion_open = 1
 			    AND sticky = 0
-			    AND node_id = ?'
-                . ($forum['auto_close_replies'] != -1 ? 'AND reply_count <= ?' : '').
-                . ($forum['auto_close_views'] != -1 ? 'AND view_count <= ?' : '').
+			    AND node_id = ? ' .
+                ($forum['auto_close_replies'] != -1 ? 'AND reply_count <= ? ' : '') .
+                ($forum['auto_close_views'] != -1 ? 'AND view_count <= ? ' : '') .
                 'AND '. ($forum['auto_close_mode'] == 'last_post_date' ? 'last_post_date' : 'post_date') . ' <= ' . intval(time() - (60 * 60 * 24 * $forum['auto_close_days'])) .'
 		', $input);
     }
