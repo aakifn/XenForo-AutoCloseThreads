@@ -16,7 +16,7 @@ class NixFifty_AutoCloseThreads_CronEntry_CloseThread
             foreach ($closeForums AS $forumId => $forum)
             {
                 $threadsToClose = array_merge($threadsToClose,
-                    $autoCloseModel->getThreadsToClose($forumId, $forum['auto_close_days'], $forum['auto_close_mode']));
+                    $autoCloseModel->getThreadsToClose($forum));
             }
 
             if (!empty($threadsToClose))
