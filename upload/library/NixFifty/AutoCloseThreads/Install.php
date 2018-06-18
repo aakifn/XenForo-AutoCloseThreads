@@ -98,11 +98,11 @@ class NixFifty_AutoCloseThreads_Install
 		";
 
         $alters['xf_forum_auto_close_replies'] = "
-			ALTER TABLE xf_forum	ADD COLUMN `auto_close_replies` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '-1'
+			ALTER TABLE xf_forum	ADD COLUMN `auto_close_replies` INT(10) NOT NULL DEFAULT '-1'
 		";
 
         $alters['xf_forum_auto_close_views'] = "
-			ALTER TABLE xf_forum	ADD COLUMN `auto_close_views` INT(10) UNSIGNED NOT NULL DEFAULT '-1'
+			ALTER TABLE xf_forum	ADD COLUMN `auto_close_views` INT(10) NOT NULL DEFAULT '-1'
 		";
         return $alters;
     }
